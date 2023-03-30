@@ -18,12 +18,15 @@ class Game():
         self.group = pygame.sprite.LayeredUpdates()
         self.speed = 7
 
+        self.score = 0
+
     def update(self):
 
         self.clock.tick(self.FPS)
         self.display.blit(self.background, (0, 0))
         self.group.draw(self.display)
         self.group.update()
+        self.show_score()
         for e in self.group:
             if e.rect.y < -2520:
                 e.kill()
@@ -38,6 +41,11 @@ class Game():
         sprtlist = self.group.get_sprites_at(pos)
         for k in sprtlist:
             k.kill()
+            self.score = self.score + 1
+
+    def show_score(self):
+        score = self.font.render("Score : " + str(self.score), True, (255, 255, 255))
+        self.display.blit(score, (10, 10))
 
     def speedup(self):
         self.speed += 2
